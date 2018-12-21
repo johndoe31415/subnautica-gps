@@ -21,5 +21,18 @@ although this is much more complicated.
 
 Anyways, have fun.
 
+## How does it work?
+You need to place three beacons at known locations. Your initial liferaft will
+always be the center of the universe for trilateration, i.e., placed at (0, 0, 0).
+I define "North" to be positive Y values and "East" to be positive X values.
+Therefore, in my example, I swam 1km from the liferaft exactly to the north and
+placed a "north" beacon there, then swam back and 1km to the west and places a
+"west" beacon there. The definitions are changable in the JSON file.
+
+Then, just run it and enter the distances that you're seeing from your current
+location. Skip over any you don't want (e.g., close ones that would lead to
+numerical instability) by pressing return. After two or three entered values,
+you should have a result.
+
 ## License
 GNU GPL-3.
