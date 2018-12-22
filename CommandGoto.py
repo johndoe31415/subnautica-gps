@@ -31,12 +31,16 @@ class CommandGoto(BaseCommand):
 		pos = self._read_coords("Current position: ")
 		target = self._read_coords("Target          : ")
 
+		# Make vectors 2d
+		pos = geo.Vector2D(pos.x, pos.y)
+		target = geo.Vector2D(target.x, target.y)
+
 		vector = target - pos
 		compass = AngleTools.bearing_to_compass(vector.bearing)
 		# One subnautica compass tick is 7.5°
 		ticks = compass.adjust / 7.5
 		print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 		print("Distance to target: %.0f" % (vector.length))
-		print("Bearing           : %.0f°" % (compass.bearing))
-		print("Direction         : %s %+.1f" % (compass.compass, ticks))
+		print("Bearing           : %.0f°" % (round(compass.bearing) % 360))
+		print("Direction         : %s %+.0f° (%+.1f ticks)" % (compass.compass, compass.adjust, ticks))
 

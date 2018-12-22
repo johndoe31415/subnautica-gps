@@ -28,6 +28,9 @@ class CommandTrilaterate(BaseCommand):
 		BaseCommand.__init__(self, cmdname, args)
 
 		known_distances = 0
+#		self._buoys["Liferaft"]["dist"] = 1000
+#		self._buoys["NAV N 1k"]["dist"] = 5
+#		self._buoys["NAV W 1k"]["dist"] = 1414
 		for (name, buoy) in self._buoys.items():
 			if "dist" in buoy:
 				known_distances += 1
@@ -52,7 +55,7 @@ class CommandTrilaterate(BaseCommand):
 
 			(i1, i2) = intersection
 			if len(remaining) == 0:
-				print("Coordinates are one of (distance between options %.0f):" % (i1.dist(i2)))
+				print("Current coordinates are one of (distance between options %.0f):" % (i1.dist(i2)))
 				print("    %.0f / %.0f" % (i1.x, i1.y))
 				print("    %.0f / %.0f" % (i2.x, i2.y))
 			else:
@@ -63,4 +66,7 @@ class CommandTrilaterate(BaseCommand):
 					i = i1
 				else:
 					i = i2
-				print("Coordinates are: %.0f / %.0f (distance from prediction %.0f)" % (i.x, i.y, c3.dist(i)))
+				print("Current coordinates are: %.0f / %.0f (distance from prediction %.0f)" % (i.x, i.y, c3.dist(i)))
+				name = input("Save this location as: ").strip()
+				if name != "":
+					self._save_location(name, i, method = "trilateration/2d")
