@@ -92,6 +92,17 @@ class Vector2D(Vector):
 	def z(self):
 		raise NotImplementedError("A 2D vector has no Z component.")
 
+	@property
+	def angle(self):
+		return math.atan2(self.y, self.x)
+
+	@property
+	def bearing(self):
+		angle_rad = self.angle
+		angle_deg = 180 * angle_rad / math.pi
+		bearing = (-angle_deg + 90) % 360
+		return bearing
+
 class Vector3D(Vector):
 	def __init__(self, x, y, z):
 		Vector.__init__(self, (x, y, z))
