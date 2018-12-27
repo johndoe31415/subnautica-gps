@@ -46,14 +46,16 @@ class BaseCommand():
 		if data == ".":
 			data = "Liferaft"
 		if data in self._buoys:
-			return self._buoys[data]["2d"]
+			return self._buoys[data]["pos"]
 
 		if data in self._locations:
-			return self._locations[data]
+			location = self._locations[data]
+			(coords, error) = location.calculate_coordinates(self._buoys)
+			return coords
 
 		coords = data.replace("/", "").split()
 		if len(coords) == 2:
-			return geo.Vector2D(float(coords[0]), float(coords[1]))
+			return geo.Vector3D(float(coords[0]), float(coords[1]), 0)
 		elif len(coords) == 3:
 			return geo.Vector2D(float(coords[0]), float(coords[1]), float(coords[2]))
 		else:
