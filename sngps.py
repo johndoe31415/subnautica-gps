@@ -25,6 +25,7 @@ from MultiCommand import MultiCommand
 from CommandTrilaterate import CommandTrilaterate
 from CommandGoto import CommandGoto
 from CommandRecalculate import CommandRecalculate
+from CommandPlot import CommandPlot
 
 mc = MultiCommand()
 
@@ -42,5 +43,12 @@ def genparser(parser):
 	parser.add_argument("--buoys-file", metavar = "filename", type = str, default = "known.json", help = "Specifies the file of the known buoy location. Defaults to %(default)s.")
 	parser.add_argument("--verbose", action = "store_true", help = "Increase verbosity.")
 mc.register("recalculate", "Update all locations from the sources by recalculating", genparser, action = CommandRecalculate)
+
+def genparser(parser):
+	parser.add_argument("-o", "--output", metavar = "filename", type = str, default = "map.png", help = "When plotting to a PNG file, specifies the filename. Defaults to %(default)s.")
+	parser.add_argument("--gpl", action = "store_true", help = "Instead of plotting, print the gnuPlot source to stdout.")
+	parser.add_argument("--buoys-file", metavar = "filename", type = str, default = "known.json", help = "Specifies the file of the known buoy location. Defaults to %(default)s.")
+	parser.add_argument("--verbose", action = "store_true", help = "Increase verbosity.")
+mc.register("plot", "Plot all locations", genparser, action = CommandPlot)
 
 mc.run(sys.argv[1:])
