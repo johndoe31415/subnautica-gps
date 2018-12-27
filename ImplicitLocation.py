@@ -97,15 +97,18 @@ class ImplicitLocation(object):
 
 		while True:
 			prev_hypothesis = hypothesis
+			stepping_error = None
 			for step in steps:
 				(hypothesis, error) = self._improve_hypothesis(buoys, hypothesis, geo.Vector3D(1000, 0, 0))
+				if (stepping_error is None) or (error > stepping_error):
+					stepping_error = error
 				if self.depth is not None:
 					hypothesis = geo.Vector3D(hypothesis.x, hypothesis.y, self.depth)
 
 			if (prev_hypothesis.dist(hypothesis)) < 1:
 				break
 
-		return (hypothesis, error)
+		return (hypothesis, stepping_error)
 
 	@classmethod
 	def _input_value(cls, prompt):

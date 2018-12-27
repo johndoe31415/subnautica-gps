@@ -44,8 +44,12 @@ class Sphere(object):
 
 	def nearest_point(self, point):
 		segment = LineSegment(self.midpt, point)
-		tau = self.r / segment.length
-		nearest_point = segment.line(tau)
+		if segment.length == 0:
+			# Choose any point
+			nearest_point = self._midpt + (self._radius * Vector3D(1, 0, 0))
+		else:
+			tau = self.r / segment.length
+			nearest_point = segment.line(tau)
 		return nearest_point
 
 	def __repr__(self):
