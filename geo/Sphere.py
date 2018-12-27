@@ -19,19 +19,34 @@
 #
 #	Johannes Bauer <JohannesBauer@gmx.de>
 
-import json
-import geo
-from BaseCommand import BaseCommand
-from ImplicitLocation import ImplicitLocation
+import math
+import itertools
 
-class CommandTrilaterate(BaseCommand):
-	def __init__(self, cmdname, args):
-		BaseCommand.__init__(self, cmdname, args)
+from .Vector import Vector3D
+from .Line import LineSegment
 
-		location = ImplicitLocation.input_keyboard(self._buoys)
-		(coords, error) = location.calculate_coordinates(self._buoys)
-		print("Position: %.0f / %.0f depth %.0f (error %.0f)" % (coords.x, coords.y, coords.z, error))
+class NoInterceptException(Exception): pass
 
-		location_name = input("Location name: ").strip()
-		if location_name != "":
-			self._save_location(location_name, location, coords)
+class Sphere(object):
+	def __init__(self, midpt, radius):
+		assert(radius > 0)
+		assert(midpt.dim == 3)
+		self._midpt = midpt
+		self._radius = radius
+
+	@property
+	def midpt(self):
+		return self._midpt
+
+	@property
+	def r(self):
+		return self._radius
+
+	def nearest_point(self, point):
+		segment = LineSegment(self.midpt, point)
+		tau = self.r / segment.length
+		nearest_point = segment.line(tau)
+		return nearest_point
+
+	def __repr__(self):
+		return "Sphere(M = %s, r = %.2f)" % (self.midpt, self.r)

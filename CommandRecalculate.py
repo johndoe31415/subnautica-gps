@@ -24,14 +24,10 @@ import geo
 from BaseCommand import BaseCommand
 from ImplicitLocation import ImplicitLocation
 
-class CommandTrilaterate(BaseCommand):
+class CommandRecalculate(BaseCommand):
 	def __init__(self, cmdname, args):
 		BaseCommand.__init__(self, cmdname, args)
 
-		location = ImplicitLocation.input_keyboard(self._buoys)
-		(coords, error) = location.calculate_coordinates(self._buoys)
-		print("Position: %.0f / %.0f depth %.0f (error %.0f)" % (coords.x, coords.y, coords.z, error))
-
-		location_name = input("Location name: ").strip()
-		if location_name != "":
-			self._save_location(location_name, location, coords)
+		for (name, location) in self._locations.items():
+			(coords, error) = location.calculate_coordinates(buoys = self._buoys)
+			print("%s: %.0f / %.0f depth %.0f (error %.0f)" % (name, coords.x, coords.y, coords.z, error))

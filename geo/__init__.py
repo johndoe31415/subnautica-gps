@@ -22,3 +22,4 @@
 from .Vector import Vector2D, Vector3D
 from .Line import LineSegment
 from .Circle import Circle
+from .Sphere import Sphere

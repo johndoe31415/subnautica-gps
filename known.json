@@ -10,5 +10,9 @@
 	{
 		"name": 	"NAV W 1k",
 		"coords":	[ -1000, 0, 0 ]
+	},
+	{
+		"name": 	"NAV S 1k",
+		"coords":	[ 0, -1000, 0 ]
 	}
 ]

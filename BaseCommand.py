@@ -23,6 +23,7 @@ import json
 import geo
 import collections
 import time
+from ImplicitLocation import ImplicitLocation
 
 class BaseCommand():
 	def __init__(self, cmdname, args):
@@ -36,10 +37,9 @@ class BaseCommand():
 		for buoy in buoys:
 			name = buoy["name"]
 			self._buoys[name] = buoy
-			buoy["2d"] = geo.Vector2D(buoy["coords"][0], buoy["coords"][1])
-			buoy["3d"] = geo.Vector3D(buoy["coords"][0], buoy["coords"][1], buoy["coords"][2])
+			buoy["pos"] = geo.Vector3D(buoy["coords"][0], buoy["coords"][1], buoy["coords"][2])
 
-		self._locations = { name: geo.Vector3D(data["coords"][0], data["coords"][1], data["coords"][2]) for (name, data) in self._load_location_file().items() }
+		self._locations = { name: ImplicitLocation.from_dict(data["source"]) for (name, data) in self._load_location_file().items() }
 
 	def _read_coords(self, msg):
 		data = input(msg).strip()
@@ -72,14 +72,12 @@ class BaseCommand():
 			json.dump(locations, f, sort_keys = True, indent = 4)
 			print(file = f)
 
-	def _save_location(self, name, vector, method = None):
+	def _save_location(self, name, location, coords = None):
 		locations = self._load_location_file()
 		locations[name] = {
-			"method":		method,
+			"source":	location.to_dict(),
 		}
-		if vector.dim == 2:
-			locations[name]["coords"] = [ vector.x, vector.y, 0 ]
-		else:
-			locations[name]["coords"] = list(vector)
+		if coords is not None:
+			locations[name]["coords"] = list(coords,)
 		locations[name]["added_ts"] = time.time()
 		self._save_location_file(locations)

@@ -24,6 +24,7 @@ import sys
 from MultiCommand import MultiCommand
 from CommandTrilaterate import CommandTrilaterate
 from CommandGoto import CommandGoto
+from CommandRecalculate import CommandRecalculate
 
 mc = MultiCommand()
 
@@ -36,5 +37,10 @@ def genparser(parser):
 	parser.add_argument("--buoys-file", metavar = "filename", type = str, default = "known.json", help = "Specifies the file of the known buoy location. Defaults to %(default)s.")
 	parser.add_argument("--verbose", action = "store_true", help = "Increase verbosity.")
 mc.register("goto", "Get the bearing from a given target", genparser, action = CommandGoto)
+
+def genparser(parser):
+	parser.add_argument("--buoys-file", metavar = "filename", type = str, default = "known.json", help = "Specifies the file of the known buoy location. Defaults to %(default)s.")
+	parser.add_argument("--verbose", action = "store_true", help = "Increase verbosity.")
+mc.register("recalculate", "Update all locations from the sources by recalculating", genparser, action = CommandRecalculate)
 
 mc.run(sys.argv[1:])

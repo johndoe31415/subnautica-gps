@@ -25,6 +25,7 @@ import unittest
 from .Vector import Vector2D, Vector3D
 from .Line import LineSegment
 from .Circle import Circle
+from .Sphere import Sphere
 
 class GeoTests(unittest.TestCase):
 	def test_vec2d(self):
@@ -100,3 +101,35 @@ class GeoTests(unittest.TestCase):
 		self.assertAlmostEqual(p1.y, 0.4443, places = 4)
 		self.assertAlmostEqual(p2.x, -7.8913, places = 4)
 		self.assertAlmostEqual(p2.y, -1.4392, places = 4)
+
+	def test_sphere(self):
+		s = Sphere(Vector3D(0, 0, 0), radius = 1)
+		p = s.nearest_point(Vector3D(1, 0, 0))
+		self.assertAlmostEqual(p.x, 1, places = 4)
+		self.assertAlmostEqual(p.y, 0, places = 4)
+		self.assertAlmostEqual(p.z, 0, places = 4)
+
+		p = s.nearest_point(Vector3D(1.1, 0, 0))
+		self.assertAlmostEqual(p.x, 1, places = 4)
+		self.assertAlmostEqual(p.y, 0, places = 4)
+		self.assertAlmostEqual(p.z, 0, places = 4)
+
+		p = s.nearest_point(Vector3D(0, 1.5, 0))
+		self.assertAlmostEqual(p.x, 0, places = 4)
+		self.assertAlmostEqual(p.y, 1, places = 4)
+		self.assertAlmostEqual(p.z, 0, places = 4)
+
+		p = s.nearest_point(Vector3D(0, 0.4, 0))
+		self.assertAlmostEqual(p.x, 0, places = 4)
+		self.assertAlmostEqual(p.y, 1, places = 4)
+		self.assertAlmostEqual(p.z, 0, places = 4)
+
+		p = s.nearest_point(Vector3D(0, -0.4, 0))
+		self.assertAlmostEqual(p.x, 0, places = 4)
+		self.assertAlmostEqual(p.y, -1, places = 4)
+		self.assertAlmostEqual(p.z, 0, places = 4)
+
+		p = s.nearest_point(Vector3D(0, -100, 0))
+		self.assertAlmostEqual(p.x, 0, places = 4)
+		self.assertAlmostEqual(p.y, -1, places = 4)
+		self.assertAlmostEqual(p.z, 0, places = 4)
