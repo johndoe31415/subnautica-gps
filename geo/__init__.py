@@ -20,6 +20,6 @@
 #	Johannes Bauer <JohannesBauer@gmx.de>
 
 from .Vector import Vector2D, Vector3D
-from .Line import LineSegment
+from .Line import Line, LineSegment
 from .Circle import Circle
 from .Sphere import Sphere

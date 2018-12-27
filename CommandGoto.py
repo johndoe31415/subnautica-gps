@@ -30,6 +30,14 @@ class CommandGoto(BaseCommand):
 
 		pos = self._read_coords("Current position: ")
 		target = self._read_coords("Target          : ")
+		far = input("How far    [1.0]: ").strip()
+		if far == "":
+			far = 1.0
+		else:
+			far = float(far)
+
+		path = geo.Line.through(pt1 = pos, pt2 = target)
+		target = path(far)
 
 		vector = target - pos
 		proj_vector = geo.Vector2D(vector.x, vector.y)
