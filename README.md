@@ -14,8 +14,6 @@ with this and implemented a kind of "GPS style" trilateration. This is what
 this is: It uses a relatively simple giant step/baby step type algorithm for 3D
 trilateration which should be numerically rather stable.
 
-Anyways, have fun.
-
 ## How does it work?
 You need to place three beacons at known locations. Your initial liferaft will
 always be the center of the universe for trilateration, i.e., placed at (0, 0, 0).
@@ -83,7 +81,10 @@ $ ./sngps plot
 
 And with some Gnuplot magic you get a nice map of everything:
 
-[![Map of the plotted terrain](https://raw.githubusercontent.com/johndoe31415/subnautica-gps/master/docs/map.png)]
+![Map of the plotted terrain](https://raw.githubusercontent.com/johndoe31415/subnautica-gps/master/docs/map.png)
+
+You get the drift -- all options have extensive help pages and a lot more
+options, so just play around with it. Have fun!
 
 ## License
 GNU GPL-3.
