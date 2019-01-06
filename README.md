@@ -83,7 +83,7 @@ $ ./sngps plot
 
 And with some Gnuplot magic you get a nice map of everything:
 
-[![Map of the plotted terrain](https://TODO)]
+[![Map of the plotted terrain](https://raw.githubusercontent.com/johndoe31415/subnautica-gps/master/docs/map.png)]
 
 ## License
 GNU GPL-3.
