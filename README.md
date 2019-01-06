@@ -10,16 +10,9 @@ precise distance to all of your beacons.
 
 However, you cannot easily trilaterate yourself and record that position
 without placing another beacon. So, the engineer I am, I wanted to experiment
-with this and implemented a kind of "GPS style" trilateration. Initial
-implementation is in 2D only and expects two or three beacons placed on the
-water surface (i.e., the Z coordinate is zero).
-
-Then, you can enter two or three distances to any beacons and it will try to
-trilaterate your given position.
-
-I plan to add later to also give a bearing when there's a certain point you
-want to reach from a given location. Maybe even add true 3d trilateration,
-although this is much more complicated.
+with this and implemented a kind of "GPS style" trilateration. This is what
+this is: It uses a relatively simple giant step/baby step type algorithm for 3D
+trilateration which should be numerically rather stable.
 
 Anyways, have fun.
 
@@ -31,10 +24,66 @@ Therefore, in my example, I swam 1km from the liferaft exactly to the north and
 placed a "north" beacon there, then swam back and 1km to the west and places a
 "west" beacon there. The definitions are changable in the JSON file.
 
-Then, just run it and enter the distances that you're seeing from your current
-location. Skip over any you don't want (e.g., close ones that would lead to
-numerical instability) by pressing return. After two or three entered values,
-you should have a result.
+The more beacons you have, the better the approximation. With the current
+version, the raw data is saved, which means that if the algorithm improves
+later on you can simply recalculate positions.
+
+## How do I run it?
+Pretty easy. Want to know where you are?
+
+```
+$ ./sngps where
+Depth: 595
+Distance to Liferaft: 1397
+Distance to NAV N 1k: 1050
+Distance to NAV W 1k: 1103
+Distance to NAV S 1k:
+Position: -864 / 920 depth 595 (error 9)
+Location name: Alien Portal
+```
+Here, you can see I gave the program only the distances to the origin and the
+N/W beacons. Any error value lower than 20 means that all results are pretty
+much in agreement with each other. When you see a large error value here, it
+likely means you've mixed up some beacons.
+
+So, cool, now it saved "Alien Portal" in the locations.json file. But how do I
+find it again? Easy enough:
+
+```
+$ ./sngps goto
+Current position: .
+Target          : Alien Portal
+How far    [1.0]:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Position          : 0 / 0 depth 0
+Target            : -864 / 920 depth 595
+Distance to target: 1395
+Bearing           : 317°
+Direction         : NW +2° (+0.2 ticks)
+Depth difference  : 595
+```
+
+Here, we enter as the current position "." (which is the shortcut for Liferaft,
+the origin) and as a target our previously located portal. Then it also asks,
+how far in the line we want to go. Usually we want to go all the way there (1.0
+or simply return), but sometimes you might want the *exact* position between
+two bases and you can simply enter "0.5" here.
+
+Then it tells you that you want to go from (0, 0, 0) to (-864, 920, 595). The
+distance is 1395 meters and your azimuth (bearing) is 317°. This is 2 degrees
+more than NW. It even gives you the Subnautica compass "ticks" (each of which
+is 7.5°), so N + 1tick means the compass tick that is one to the right of
+North.
+
+So after you've cataloged everything, you might want to have a map of it? Sure:
+
+```
+$ ./sngps plot
+```
+
+And with some Gnuplot magic you get a nice map of everything:
+
+[![Map of the plotted terrain](https://TODO)]
 
 ## License
 GNU GPL-3.
