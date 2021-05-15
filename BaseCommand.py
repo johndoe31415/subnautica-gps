@@ -1,5 +1,5 @@
 #	subnautica-gps - GPS geolocation for Subnautica
-#	Copyright (C) 2018-2018 Johannes Bauer
+#	Copyright (C) 2018-2021 Johannes Bauer
 #
 #	This file is part of subnautica-gps.
 #
@@ -57,7 +57,7 @@ class BaseCommand():
 		if len(coords) == 2:
 			return geo.Vector3D(float(coords[0]), float(coords[1]), 0)
 		elif len(coords) == 3:
-			return geo.Vector2D(float(coords[0]), float(coords[1]), float(coords[2]))
+			return geo.Vector3D(float(coords[0]), float(coords[1]), float(coords[2]))
 		else:
 			raise ValueError("Cannot parse coordinate form '%s'." % (data))
 
