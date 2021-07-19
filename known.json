@@ -4,15 +4,15 @@
 		"coords":	[ 0, 0, 0 ]
 	},
 	{
-		"name": 	"NAV N 1k",
-		"coords":	[ 0, 1000, 0 ]
+		"name": 	"NAV S",
+		"coords":	[ 0, -465, 0 ]
 	},
 	{
-		"name": 	"NAV W 1k",
-		"coords":	[ -1000, 0, 0 ]
+		"name": 	"NAV E",
+		"coords":	[ 677, 0, 33 ]
 	},
 	{
-		"name": 	"NAV S 1k",
-		"coords":	[ 0, -1000, 0 ]
+		"name": 	"NAV W",
+		"coords":	[ -371, 0, 34 ]
 	}
 ]

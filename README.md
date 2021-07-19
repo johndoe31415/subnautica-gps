@@ -1,5 +1,5 @@
 # Subnautica GPS System
-[![Build Status](https://travis-ci.com/johndoe31415/subnautica-gps.svg?branch=master)](https://travis-ci.org/johndoe31415/subnautica-gps)
+[![Build Status](https://travis-ci.com/johndoe31415/subnautica-gps.svg?branch=master)](https://travis-ci.com/johndoe31415/subnautica-gps)
 
 Subnautica is an *amazing* [game by Unknown Worlds
 Entertainment](https://unknownworlds.com/subnautica/). It is incredible, picked
